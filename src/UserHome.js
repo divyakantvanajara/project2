@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom"
-var UserLayout = () => {
+var UserHome = () => {
   return (<div>
 
     <div className="template-index diva template-index-diva">
@@ -1413,4 +1413,4 @@ var UserLayout = () => {
     <Outlet />
   </div>)
 }
-export default UserLayout
+export default UserHome
