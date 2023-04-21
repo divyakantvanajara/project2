@@ -17,7 +17,7 @@ var UserLogin = () => {
     {/* Breadcrumbs */}
     <div className="bredcrumbWrap bredcrumbWrapPage bredcrumb-style2 text-center">
       <div className="container breadcrumbs">
-        <a href="index.html" title="Back to the home page">Home</a><span aria-hidden="true">|</span><span className="title-bold">Login</span>
+        <a href="/" title="Back to the home page">Home</a><span aria-hidden="true">|</span><span className="title-bold">Login</span>
       </div>
     </div>
     {/* End Breadcrumbs */}
@@ -27,7 +27,7 @@ var UserLogin = () => {
         <div className="col-12 col-sm-12 col-md-6 col-lg-6 box mb-4 mb-md-0">
           <h3>New Customers</h3>
           <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
-          <a href="register.html" className="btn">Create an account</a>
+          <a href="/register" className="btn">Create an account</a>
         </div>
         <div className="col-12 col-sm-12 col-md-6 col-lg-6 box">
           <div className="mb-4">
@@ -52,8 +52,8 @@ var UserLogin = () => {
                 <div className="text-left col-12 col-sm-12 col-md-12 col-lg-12">
                   <input type="submit" className="btn mb-3" defaultValue="Sign In" />
                   <p className="mb-4">
-                    <a href="forgot-your-password.html">Forgot your password?</a> &nbsp; | &nbsp;
-                    <a href="register.html" id="customer_register_link">Create account</a>
+                    <a href="/user_forgot_your_password">Forgot your password?</a> &nbsp; | &nbsp;
+                    <a href="/register" id="customer_register_link">Create account</a>
                   </p>
                 </div>
               </div>

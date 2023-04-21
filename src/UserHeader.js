@@ -37,16 +37,19 @@ function UserHeader ()
                          
                         </li>
                         <li className="lvl1 parent megamenu">
-                          <Link to="category">Category<i className="an an-angle-down" /></Link>
+                          <Link to="/category">Category<i className="an an-angle-down" /></Link>
                        </li>
                        <li className="lvl1 parent megamenu">
-                          <Link to="product">Product<i className="an an-angle-down" /></Link>
+                          <Link to="/product">Product<i className="an an-angle-down" /></Link>
                        </li>
                        <li className="lvl1 parent megamenu">
-                          <Link to="login">Login<i className="an an-angle-down" /></Link>
+                          <Link to="/login">Login<i className="an an-angle-down" /></Link>
                        </li>
                        <li className="lvl1 parent megamenu">
-                          <Link to="register">Register<i className="an an-angle-down" /></Link>
+                          <Link to="/register">Register<i className="an an-angle-down" /></Link>
+                       </li>
+                       <li className="lvl1 parent megamenu">
+                          <Link to="/user_change_your_password">Chang Your Password<i className="an an-angle-down" /></Link>
                        </li>
                        
                       </ul>

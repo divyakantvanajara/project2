@@ -56,7 +56,7 @@ var UserChangYourPassword = () => {
                     <div className="text-left col-12 col-sm-12 col-md-12 col-lg-12">
                       <input type="submit" className="btn mb-3" defaultValue="Submit" />
                       <p className="mb-4">
-                        <a href="login.html">« Back To Login Page</a>
+                        <a href="/login">« Back To Login Page</a>
                       </p>
                     </div>
                   </div>

@@ -19,7 +19,7 @@ var UserRegister = () => {
     {/* Breadcrumbs */}
     <div className="bredcrumbWrap bredcrumbWrapPage bredcrumb-style2 text-center">
       <div className="container breadcrumbs">
-        <a href="index.html" title="Back to the home page">Home</a><span aria-hidden="true">|</span><span className="title-bold">Register</span>
+        <a href="/" title="Back to the home page">Home</a><span aria-hidden="true">|</span><span className="title-bold">Register</span>
       </div>
     </div>
     {/* End Breadcrumbs */}
@@ -79,7 +79,7 @@ var UserRegister = () => {
                   <input type="submit" className="btn mb-3" defaultValue="Submit" />
                 </div>
                 <div className="text-right col-12 col-sm-12 col-md-6 col-lg-6">
-                  <a href="login.html"><i className="icon an an-angle-double-left me-1" />Back To Login</a>
+                  <a href="/login"><i className="icon an an-angle-double-left me-1" />Back To Login</a>
                 </div>
               </div>
             </form>
