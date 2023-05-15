@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import UserHome from './UserHome';
 import UserCategory from './UserCategory';
+
 import UserProduct  from './UserProduct';
 import UserLogin from './UserLogin';
 import UserRegister from './UserRegister';
@@ -13,6 +14,7 @@ import UserCart from './UserCart';
 import UserCheckout from './UserCheckout'
 
 import { BrowserRouter,Routes, Route } from 'react-router-dom';
+import UserProductlist from './UserProductlist';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 function MyRouter()
@@ -23,7 +25,7 @@ function MyRouter()
                 
                 <Route path='/' element={< UserHome />} />
                     <Route path='/category' element={<UserCategory />} />
-            
+                    <Route path='/product_list' element={<UserProductlist />} />
                     <Route path='/product' element={< UserProduct />} />
                     <Route path='/register' element={< UserRegister/>} />
                    
