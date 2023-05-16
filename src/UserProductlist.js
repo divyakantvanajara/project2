@@ -10,41 +10,46 @@ class UserProductlist extends Component
   {
     super(props);
     this.state ={
-      categories :[]
+      products :[]
     }
   }
   componentDidMount()
+    {
+        var url = new URL(window.location.href);
+        var CurrentPage = url.href;
+        var position_of_last_slash = CurrentPage.lastIndexOf("/");
+        var categoryid = CurrentPage.substr(position_of_last_slash+1);
+        categoryid=0;
+        console.log(categoryid);
+        var url = `https://www.theeasylearnacademy.com/shop/ws/product.php?categoryid=${categoryid}`;
+        var self = this;
+        axios({
+          method:'get',
+          url: url,
+          responseType:'json'
+        }).then(function(response){
+             console.log(response.data);
+            if(response.data[0]['error'] !== 'no')
+            {
+              alert(response.data[0]['error'])
+            }
+            else if(response.data[1]['total'] == 0)
+            {
+              alert('no product found');
+            }
+            else 
+            {
+              response.data.splice(0,2);
+              self.setState({
+                  products : response.data
+              });
+            }
+        });
+    }
+  render()
   {
-    var self = this;
-    axios({
-      method:'get',
-      url:'https://www.theeasylearnacademy.com/shop/ws/category.php',
-      responseType:'json',
-      
-    }).then(function(response){
-      var error =response.data[0]['error']
-      if(error !== 'no'){
-        alert(error);
-      }
-      else
-      {
-        var total = response.data[1]['total']
-        if(total ==0){
-          alert('no category found');
-        }
-        else
-        {
-          response.data.splice(0,2);
-          self.setState({
-            categories: response.data
-          })
-        }
-      }
-    })
-  }
-  render(){
     return (<div>
-
+      
       <div className="pageWrapper">
       <UserHeader />
         <div id="page-content">
@@ -68,9 +73,9 @@ class UserProductlist extends Component
                   {/* Grid Product */}
                   <div className="grid-products grid--view-items ">
                     <div className="row">
-                      {this.state.categories.map(function (UserCategory){
-                        console.log(UserCategory);
-                        return(<div className="col-6 col-sm-6 col-md-4 col-lg-4 item">
+                     
+                      
+                       <div className="col-6 col-sm-6 col-md-4 col-lg-4 item">
                         {/* Product Image */}
                         <div className="product-image">
                           {/* Product Image */}
@@ -90,7 +95,7 @@ class UserProductlist extends Component
                         <div className="product-details text-center">
                           {/* Product Name */}
                           <div className="product-name">
-                            <a href="/product_list">Elastic Waist Dress</a>
+                            <a href="/product">Elastic Waist Dress</a>
                           </div>
                           {/* End Product Name */}
                           {/* Product Price */}
@@ -111,8 +116,8 @@ class UserProductlist extends Component
                           {/* End Variant */}
                         </div>
                         {/* End Product Details */}
-                      </div>)
-                      })}
+                      </div>
+                      
               
                       
                     </div>
@@ -132,7 +137,7 @@ class UserProductlist extends Component
       
       
       
-        </div>)
+     </div>)
   }
 }
 

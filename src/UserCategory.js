@@ -90,7 +90,7 @@ class UserCategory extends Component
                         <div className="product-details text-center">
                           {/* Product Name */}
                           <div className="product-name">
-                            <a href={"/product_list" + category.id}>{category.title}</a>
+                            <a href={"/product_list/" + category.id}>{category.title}</a>
                           </div>
                           {/* End Product Name */}
                           {/* Product Price */}
