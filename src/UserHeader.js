@@ -40,6 +40,9 @@ function UserHeader ()
                           <Link to="/category">Category<i className="an an-angle-down" /></Link>
                        </li>
                        <li className="lvl1 parent megamenu">
+                          <Link to="/product_list">Product Category<i className="an an-angle-down" /></Link>
+                       </li>
+                       <li className="lvl1 parent megamenu">
                           <Link to="/product">Product<i className="an an-angle-down" /></Link>
                        </li>
                        <li className="lvl1 parent megamenu">

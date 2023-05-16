@@ -68,8 +68,8 @@ class UserCategory extends Component
                   {/* Grid Product */}
                   <div className="grid-products grid--view-items ">
                     <div className="row">
-                      {this.state.categories.map(function (UserCategory){
-                        console.log(UserCategory);
+                      {this.state.categories.map(function (category){
+                       
                         return(<div className="col-6 col-sm-6 col-md-4 col-lg-4 item">
                         {/* Product Image */}
                         <div className="product-image">
@@ -90,7 +90,7 @@ class UserCategory extends Component
                         <div className="product-details text-center">
                           {/* Product Name */}
                           <div className="product-name">
-                            <a href="/product_list">Elastic Waist Dress</a>
+                            <a href={"/product_list" + category.id}>{category.title}</a>
                           </div>
                           {/* End Product Name */}
                           {/* Product Price */}

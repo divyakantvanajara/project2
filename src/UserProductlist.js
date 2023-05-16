@@ -18,8 +18,9 @@ class UserProductlist extends Component
     var self = this;
     axios({
       method:'get',
-      url:'https://www.theeasylernacademy.com/shop/ws/category.php',
+      url:'https://www.theeasylearnacademy.com/shop/ws/category.php',
       responseType:'json',
+      
     }).then(function(response){
       var error =response.data[0]['error']
       if(error !== 'no'){
@@ -89,7 +90,7 @@ class UserProductlist extends Component
                         <div className="product-details text-center">
                           {/* Product Name */}
                           <div className="product-name">
-                            <a href="/product">Elastic Waist Dress</a>
+                            <a href="/product_list">Elastic Waist Dress</a>
                           </div>
                           {/* End Product Name */}
                           {/* Product Price */}
