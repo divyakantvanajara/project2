@@ -26,7 +26,7 @@ function MyRouter()
                 <Route path='/' element={< UserHome />} />
                     <Route path='/category' element={<UserCategory />} />
                     <Route path='/product_list/:categoryid' element={<UserProductlist />} />
-                    <Route path='/product' element={< UserProduct />} />
+                    <Route path='/product/productid' element={< UserProduct />} />
                     <Route path='/register' element={< UserRegister/>} />
                    
                     <Route path='/cart' element={< UserCart/>} />
