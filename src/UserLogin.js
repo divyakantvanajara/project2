@@ -46,7 +46,10 @@ class UserLogin extends Component
       }
       else
       {
-        //login successfull
+         //login successfull
+         alert('login successfull');
+         //redirect on login route
+         window.location = '/';
       }
     })
     e.preventDefault();

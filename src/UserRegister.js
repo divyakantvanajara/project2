@@ -52,6 +52,8 @@ class UserRegister extends Component {
         })
         else{
           alert('register successfull');
+          //redirect on login route
+          window.location = '/login';
         }
       })
     }
