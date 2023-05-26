@@ -7,6 +7,7 @@ import UserProductlist from './UserProductlist';
 import UserProduct  from './UserProduct';
 import UserLogin from './UserLogin';
 import UserRegister from './UserRegister';
+import Logout from './Logout';
 import UserChangYourPassword from './UserChangYourPassword';
 import UserForgotYourPassword from './UserForgotYourPassword';
 
@@ -31,7 +32,7 @@ function MyRouter()
                    
                     <Route path='/cart' element={< UserCart/>} />
                     <Route path='/checkout' element={< UserCheckout/>} />
-                    
+                    <Route path='/logout' element={<Logout />} />
                    
                     <Route path='/login' element={<UserLogin />} />
                     <Route path='/user_change_your_password' element={<UserChangYourPassword/>} />

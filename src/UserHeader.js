@@ -1,6 +1,28 @@
 import {Link, Outlet} from "react-router-dom"
+import Cookies from 'js-cookie';
 function UserHeader ()
 {
+  let isLoggedIn = Cookies.get('isLoggedIn');
+  let temp = null;
+  if(isLoggedIn === undefined)
+  {
+    temp =(<><li className="lvl1 parent megamenu">
+    <Link to="/register">Register<i className="an an-angle-down" /></Link>
+    </li>
+    <li className="lvl1 parent megamenu">
+       <Link to="/login">Login<i className="an an-angle-down" /></Link>
+    </li></>)
+  }
+    else
+    {
+      temp =(<> <li className="lvl1 parent megamenu">
+      <Link to="/user_change_your_password">Chang Your Password<i className="an an-angle-down" /></Link>
+   </li>
+   <li className="lvl1 parent megamenu">
+   <Link to="/logout">logout<i className="an an-angle-down" /></Link>
+                       </li></>)
+    }
+  
     return(<div>
         
        
@@ -40,18 +62,12 @@ function UserHeader ()
                           <Link to="/category">Shop<i className="an an-angle-down" /></Link>
                        </li>
                        
-                       <li className="lvl1 parent megamenu">
-                       <Link to="/register">Register<i className="an an-angle-down" /></Link>
-                       </li>
-                       <li className="lvl1 parent megamenu">
-                          <Link to="/login">Login<i className="an an-angle-down" /></Link>
-                       </li>
+                       {temp}
+
                        <li className="lvl1 parent megamenu">
                           <Link to="/cart">Cart<i className="an an-angle-down" /></Link>
                        </li>
-                       <li className="lvl1 parent megamenu">
-                          <Link to="/user_change_your_password">Chang Your Password<i className="an an-angle-down" /></Link>
-                       </li>
+                      
                        <li className="lvl1 parent megamenu">
                           <Link to="/checkout">Checkout<i className="an an-angle-down" /></Link>
                        </li>
@@ -81,5 +97,5 @@ function UserHeader ()
     </div>
 
     )
-}
+  }
 export default UserHeader

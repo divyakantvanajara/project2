@@ -3,6 +3,7 @@ import UserFooter from "./UserFooter"
 import UserHeader from "./UserHeader"
 import { Component } from "react"
 import axios from 'axios'
+import Cookies from "js-cookie"
 class UserLogin extends Component 
 {
   constructor(props)
@@ -48,6 +49,10 @@ class UserLogin extends Component
       {
          //login successfull
          alert('login successfull');
+         //create cookies
+
+         Cookies.set('isLoggedIn',true);
+         Cookies.set('id',response.data[3]['id']);
          //redirect on login route
          window.location = '/';
       }
