@@ -3,6 +3,7 @@ import UserFooter from "./UserFooter"
 import UserHeader from "./UserHeader"
 import axios from "axios"
 import { Component } from "react"
+import Cookies from "js-cookie"
 class UserProduct extends Component 
 {
   constructor(props) {
@@ -15,16 +16,50 @@ class UserProduct extends Component
       size: '',
       weight: '',
       stock: '',
+      productid:''
     }
   }
+  AddToCart = () =>{
+    // alert('button clicked....');
+    /*
+         [{"error":"input is missing"}] 
+         [{"error":"no"},{"message":"cart updated"}]
+         input : usersid,productid(required) 
+    */
+   var usersid = Cookies.get('id');
+   var apiurl = `https://theeasylearnacademy.com/shop/ws/add_to_cart.php?productid=${this.state.productid}&usersid=${usersid}`;
+   var self = this;
+   axios({
+     url: apiurl, 
+     method: 'get',
+     responseType : 'json'
+   }).then(function (response) {
+        console.log(response.data);
+         /*
+                [{'error':'input missing'}]
+                [{'error':'no'},{'message':'product added into cart'}]
+            */
+           var error = response.data[0]['error'];
+           if(error != 'no')
+           alert(error);
+
+           else
+          alert(response.data[1]['message']);
+        
+   });
+   
+}
   componentDidMount()
     {
         var url = new URL(window.location.href);
         var CurrentPage = url.href;
         var position_of_last_slash = CurrentPage.lastIndexOf("/");
-        var productid = CurrentPage.substr(position_of_last_slash+1);
-        var apiurl = `https://www.theeasylearnacademy.com/shop/ws/product.php?productid=${productid}`;
-        var self = this;
+        this.setState({
+           productid : CurrentPage.substr(position_of_last_slash+1)
+        }, () => {
+          var self = this;
+        var apiurl = `https://www.theeasylearnacademy.com/shop/ws/product.php?productid=${this.state.productid}`;
+        
         axios({
             method: 'get',
             url: apiurl,
@@ -52,7 +87,8 @@ class UserProduct extends Component
                 });
             }
         });
-    }
+    });
+  }
   render() 
   {
     return (<div>
@@ -160,17 +196,9 @@ class UserProduct extends Component
                         
                         {/* Product Action */}
                         <div className="product-action clearfix">
-                          <div className="product-form__item--quantity">
-                            <div className="wrapQtyBtn">
-                              <div className="qtyField">
-                                <a className="qtyBtn minus" href="javascript:void(0);"><i className="icon an an-minus" aria-hidden="true" /></a>
-                                <input type="text" name="quantity" defaultValue={1} className="product-form__input qty" />
-                                <a className="qtyBtn plus" href="javascript:void(0);"><i className="icon an an-plus" aria-hidden="true" /></a>
-                              </div>
-                            </div>
-                          </div>
+                         
                           <div className="product-form__item--submit">
-                            <a href="/cart" className="btn btn-primary btn product-form__cart-submit">Add to cart</a>
+                            <button type="button" onClick={this.AddToCart} className="btn btn-primary ">Add to cart</button>
 
                           </div>
 
