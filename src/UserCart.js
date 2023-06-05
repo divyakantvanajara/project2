@@ -1,7 +1,100 @@
 import { Link, Outlet } from "react-router-dom"
 import UserFooter from "./UserFooter"
 import UserHeader from "./UserHeader"
-var UserCart = () => {
+import { Component } from "react"
+import Cookies from "js-cookie";
+import axios from 'axios'
+class UserCart extends Component 
+{
+  constructor(props)
+  {
+    super(props);
+    this.state ={
+      items:[],
+      total:0
+    }
+  }  
+  componentDidMount()
+    {
+        // 1) [{"error":"input is missing"}]
+        // 2) [{"error":"no"},{"total":0}]
+        // 3) [{"error":"no"},{"total":2},{"id":"2","title":"dell laptop","price":"200","quantity":"2","weight":"3500","size":"15 inch","photo":"dell.jpg","detail":"WINDOWS 10 8 GB DDR3 RAM 512 gb ssd hard disk"},{"id":"1","title":"Acer Laptop","price":"100","quantity":"2","weight":"3000","size":"15 inch","photo":"acer.jpg","detail":"WINDOWS 10 4 GB DDR3 RAM 128 gb ssd hard disk"}]
+        // input : usersid(required) 
+        var userid = Cookies.get('id');
+        var self = this;
+        var apiurl = `https://www.theeasylearnacademy.com/shop/ws/cart.php?usersid=${userid}`;
+        axios({
+            url:apiurl,
+            responseType:'json',
+            method:'get'
+        }).then(function(response){
+            console.log(response.data);
+            var error = response.data[0]['error'];
+            if(error !='no')
+                alert(error);
+            else 
+            {
+                var total = response.data[1]['total'];
+                if(total == 0)
+                    alert('cart is empty');
+                else 
+                {
+                    response.data.splice(0,2);
+                    self.setState({
+                        items:response.data
+                    },()=>{
+                        var temp = 0;
+                        self.state.items.map(function(item){
+                            temp = temp + (item['price'] * item['quantity']);
+                        });
+                        self.setState({
+                            total:temp
+                        })
+                    });
+                }
+            }
+        });
+    }
+  DeleteFromCart = (item) => {
+        console.log('test');
+        console.log(item);
+        var self = this;
+        var cartid = item['cartid'];
+        var apiurl = `https://www.theeasylearnacademy.com/shop/ws/delete_from_cart.php?cartid=${cartid}`;
+        console.log(apiurl);
+        axios({
+            url: apiurl,
+            method: 'get',
+            responseType: 'json',
+        }).then(function(response){
+            console.log(response.data);
+            var error = response.data[0]['error'];
+            if(error != 'no')
+                alert(error);
+            else 
+            {
+                alert(response.data[1]['message']);
+                var temp = self.state.items.filter((CurrentItem)=>{
+                    if(item != CurrentItem)
+                        return CurrentItem
+                });
+                self.setState({
+                    items:temp
+                },() =>{
+                    var temp_total = 0;
+                    self.state.items.map(function(item){
+                        temp_total = temp_total + (item['price'] * item['quantity']);
+                    });
+                    self.setState({
+                        total:temp_total
+                    })
+                });
+
+            }
+        });
+    }
+  render()
+  {
     return (<div>
       <div className="pageWrapper">
       <UserHeader />
@@ -32,39 +125,40 @@ var UserCart = () => {
                   <th className="text-center">Price</th>
                   <th className="text-center">Quantity</th>
                   <th className="text-center">Total</th>
-                  <th className="action">&nbsp;</th>
+                  <th className="action">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="cart__row border-bottom line1 cart-flex border-top">
+                 {this.state.items.map(item => {
+                  return(
+                    <tr className="cart__row border-bottom line1 cart-flex border-top">
                   <td className="cart__image-wrapper cart-flex-item">
-                    <a href="product-layout1.html"><img className="cart__image blur-up lazyload" data-src="theme/assets/images/product-images/product-image16.jpg" src="theme/assets/images/product-images/product-image16.jpg" alt="Elastic Waist Dress - Navy / Small" /></a>
+                    <img src={"https://www.theeasylearnacademy.com/shop/images/product/" + item['photo']} alt />
                   </td>
                   <td className="cart__meta small--text-left cart-flex-item">
                     <div className="list-view-item__title">
-                      <a href="product-layout1.html">Elastic Waist Dress </a>
+                      <a href="product-layout1.html">{item['title']} </a>
                     </div>
-                    <div className="cart__meta-text">
-                      Color: Navy<br />Size: Small<br />
-                    </div>
+                    
                   </td>
                   <td className="cart__price-wrapper cart-flex-item text-center">
-                    <span className="money">$735.00</span>
+                    <span className="money">{item['price']}</span>
                   </td>
-                  <td className="cart__update-wrapper cart-flex-item text-center">
-                    <div className="cart__qty text-center">
-                      <div className="qtyField">
-                        <a className="qtyBtn minus" href="javascript:void(0);"><i className="icon an an-minus" /></a>
-                        <input className="cart__qty-input qty" type="text" name="updates[]" defaultValue={1} pattern="[0-9]*" />
-                        <a className="qtyBtn plus" href="javascript:void(0);"><i className="icon an an-plus" /></a>
-                      </div>
-                    </div>
+                  <td className="cart__price-wrapper cart-flex-item text-center">
+                    <span className="money">{item['quantity']}</span>
+                  </td>
+                  
+                  <td className="small--hide cart-price text-center">
+                    <span className="money">{item['price'] * item['quantity']}</span>
                   </td>
                   <td className="small--hide cart-price text-center">
-                    <span className="money">$735.00</span>
+                      <button type='button' className='btn btn-danger' onClick={() => this.DeleteFromCart(item)}>Remove</button> 
                   </td>
-                  <td className="text-center small--hide"><a href="#" className="btn btn--secondary cart__remove" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove item"><i className="icon an an-times" /></a></td>
+                 
                 </tr>
+                  )
+                })}
+                
               </tbody>
             </table>
           </form>
@@ -77,22 +171,11 @@ var UserCart = () => {
             </div>
             <div className="col-12 col-sm-12 col-md-12 col-lg-4 cart__footer">
               <div className="solid-border">
-                <div className="row border-bottom pb-2">
-                  <span className="col-12 col-sm-6 cart__subtotal-title">Subtotal</span>
-                  <span className="col-12 col-sm-6 text-right"><span className="money">$735.00</span></span>
-                </div>
-                <div className="row border-bottom pb-2 pt-2">
-                  <span className="col-12 col-sm-6 cart__subtotal-title">Tax</span>
-                  <span className="col-12 col-sm-6 text-right">$10.00</span>
-                </div>
-                <div className="row border-bottom pb-2 pt-2">
-                  <span className="col-12 col-sm-6 cart__subtotal-title">Shipping</span>
-                  <span className="col-12 col-sm-6 text-right">Free shipping</span>
-                </div>
+               
                 <div className="row border-bottom pb-2 pt-2">
                   <span className="col-12 col-sm-6 cart__subtotal-title"><strong>Grand
                       Total</strong></span>
-                  <span className="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span className="money">$1001.00</span></span>
+                  <span className="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span className="money">{this.state.total}</span></span>
                 </div>
                 <div className="cart__shipping">Shipping &amp; taxes calculated at checkout</div>
                 <div className="customCheckbox cart_tearm">
@@ -120,5 +203,7 @@ var UserCart = () => {
 
 
     </div>)
+  }
+  
 }
 export default UserCart
